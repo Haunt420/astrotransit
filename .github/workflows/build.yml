@@ -34,21 +34,13 @@ jobs:
             "build-tools;36.0.0" \
             "platform-tools"
 
-      - name: Grant Gradle wrapper execute permission
-        run: chmod +x gradlew
-
-      - name: Gradle build cache
-        uses: actions/cache@v4
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle.kts', '**/libs.versions.toml', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
+          gradle-version: '9.5.1'
 
       - name: Build debug APK
-        run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
+        run: gradle :app:assembleDebug --no-daemon --stacktrace
         env:
           GRADLE_OPTS: "-Xmx4g -Dfile.encoding=UTF-8"
 
