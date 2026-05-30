@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Android Studio
+.idea/
+*.iml
+local.properties
+
+# Kotlin/Android outputs
+captures/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# OS/editor
+.DS_Store
+Thumbs.db
+
+# Local tooling
+.venv/
