@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    // kotlin.android is built into AGP 9.0+ — applying it here is a fatal error
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.astronomy.engine)
+    // Explicit coroutines — transitive via lifecycle is fragile
+    implementation(libs.kotlinx.coroutines.android)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
