@@ -123,7 +123,11 @@ private fun TransitScreenContent(
                     verticalArrangement = Arrangement.spacedBy(14.dp)
                 ) {
                     Header(uiState)
-                    ChartSurface(uiState.chartState)
+                    // Narrow layout: chart is square, constrained by width
+                    ChartSurface(
+                        chartState = uiState.chartState,
+                        modifier = Modifier.fillMaxWidth().aspectRatio(1f)
+                    )
                     TimeScrubber(
                         uiState = uiState,
                         onScrubChanged = onScrubChanged,
@@ -156,11 +160,10 @@ private fun ChartColumn(uiState: TransitUiState, modifier: Modifier = Modifier) 
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
         Header(uiState)
+        // Wide layout: chart fills remaining Column height, constrained to square by min(w,h) in canvas
         ChartSurface(
             chartState = uiState.chartState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
+            modifier = Modifier.fillMaxWidth().weight(1f)
         )
     }
 }
@@ -243,15 +246,14 @@ private fun Header(uiState: TransitUiState) {
     }
 }
 
+// aspectRatio is now caller-controlled — no default squaring inside
 @Composable
 private fun ChartSurface(
     chartState: ChartState,
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(1f),
+        modifier = modifier,
         shape = MaterialTheme.shapes.medium,
         color = EclipseBlack,
         border = BorderStroke(1.dp, LineGrey)
