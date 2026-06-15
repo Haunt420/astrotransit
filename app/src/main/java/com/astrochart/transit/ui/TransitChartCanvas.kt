@@ -300,7 +300,8 @@ private fun Color.toArgb(): Int {
 }
 
 private fun polar(center: Offset, radius: Float, degree: Double): Offset {
-    val radians = (degree - 90.0) * PI / 180.0
+    // Mirror horizontally by negating the angle offset.
+    val radians = (90.0 - degree) * PI / 180.0
     return Offset(
         x = center.x + cos(radians).toFloat() * radius,
         y = center.y + sin(radians).toFloat() * radius
